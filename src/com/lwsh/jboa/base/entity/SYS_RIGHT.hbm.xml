@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-3-1 14:59:56 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.lwsh.jboa.base.entity.SYS_RIGHT" table="SYS_RIGHT">
+       
+        <id name="rig_code" type="java.lang.String">
+            <column name="RIG_CODE" />
+            <generator class="assigned" />
+        </id>
+        <property name="rig_parent_code" type="java.lang.String">
+            <column name="RIG_PARENT_CODE" />
+        </property>
+        <property name="rig_name" type="java.lang.String">
+            <column name="RIG_NAME" />
+        </property>
+        <property name="rig_url" type="java.lang.String">
+            <column name="RIG_URL" />
+        </property>
+        <property name="rig_tip" type="java.lang.String">
+            <column name="RIG_TIP" />
+        </property>
+        <property name="rig_type" type="java.lang.String">
+            <column name="RIG_TYPE" />
+        </property>
+        <set name="sysRoleRights" table="SYS_ROLE_RIGHT" inverse="false" lazy="false" access="field">
+            <key>
+                <column name="RF_RIGHT_CODE" />
+            </key>
+            <one-to-many class="com.lwsh.jboa.base.entity.SYS_ROLE_RIGHT" />
+        </set>
+    </class>
+</hibernate-mapping>

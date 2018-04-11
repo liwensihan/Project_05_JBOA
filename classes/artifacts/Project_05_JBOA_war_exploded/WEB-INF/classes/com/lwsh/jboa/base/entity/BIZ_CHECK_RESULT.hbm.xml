@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-3-1 12:29:40 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.lwsh.jboa.base.entity.BIZ_CHECK_RESULT" table="BIZ_CHECK_RESULT">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="sequence">
+            	<param name="sequence">SEQ_CHECK_RESULT</param>
+            </generator>
+        </id>  	
+        <!-- <many-to-one name="bizclaimvoucher" class="com.lwsh.jboa.base.entity.BIZ_CLAIM_VOUCHER" lazy="false">
+            <column name="CLAIM_ID"/>
+        </many-to-one>  -->
+        <many-to-one name="checkEmployee" class="com.lwsh.jboa.base.entity.SYS_EMPLOYEE" lazy="false">
+        	<column name="CHECKER_SN"/>
+        </many-to-one>
+        <property name="check_time" type="java.util.Date">
+            <column name="CHECK_TIME" />
+        </property>
+        <property name="result" type="java.lang.String">
+            <column name="RESULT" />
+        </property>
+        <property name="comm" type="java.lang.String">
+            <column name="COMM" />
+        </property>        
+    </class>
+</hibernate-mapping>

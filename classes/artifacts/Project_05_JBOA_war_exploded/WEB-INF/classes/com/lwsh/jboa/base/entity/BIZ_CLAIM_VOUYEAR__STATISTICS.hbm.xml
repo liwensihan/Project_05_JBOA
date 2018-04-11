@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-3-1 12:29:40 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.lwsh.jboa.base.entity.BIZ_CLAIM_VOUYEAR__STATISTICS" table="BIZ_CLAIM_VOUYEAR__STATISTICS">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="total_count" type="java.lang.String">
+            <column name="TOTAL_COUNT" />
+        </property>
+        <property name="year" type="java.lang.String">
+            <column name="YEAR" />
+        </property>
+        <property name="modify_time" type="java.util.Date">
+            <column name="MODIFY_TIME" />
+        </property>
+        <property name="depatrment_id" type="java.lang.String">
+            <column name="DEPATRMENT_ID" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-3-1 14:59:56 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.lwsh.jboa.base.entity.SYS_EMPLOYEE" table="SYS_EMPLOYEE">
+        <id name="sn" type="java.lang.String">
+        	 <column name="SN" />    
+        	 <generator class="assigned"></generator>
+        </id>
+        <property name="position_id" type="java.lang.Integer">
+            <column name="POSITION_ID" />         
+        </property>
+       	<many-to-one name="sysDepartment" class="com.lwsh.jboa.base.entity.SYS_DEPARTMENT">
+       		<column name="DEPARTMENT_ID"/>
+       	</many-to-one>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="STATUS" />
+        </property>
+        <many-to-one name="sysRole" class="com.lwsh.jboa.base.entity.SYS_ROLE" lazy="false">
+            <column name="EMP_ROLE_ID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-3-1 14:59:56 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.lwsh.jboa.base.entity.SYS_ROLE" table="SYS_ROLE">
+        <id name="role_id" type="java.lang.Integer">
+            <column name="ROLE_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="role_name" type="java.lang.String">
+            <column name="ROLE_NAME" />
+        </property>
+        <property name="role_desc" type="java.lang.String">
+            <column name="ROLE_DESC" />
+        </property>
+        <property name="role_flag" type="java.lang.Integer">
+            <column name="ROLE_FLAG" />
+        </property>
+        <set name="sysEmps" table="SYS_EMPLOYEE" inverse="false" lazy="false">
+            <key>
+                <column name="EMP_ROLE_ID" />
+            </key>
+            <one-to-many class="com.lwsh.jboa.base.entity.SYS_EMPLOYEE" />
+        </set>
+        <set name="sysRoleRights" table="SYS_ROLE_RIGHT" inverse="false" lazy="false">
+            <key>
+                <column name="RF_ROLE_ID" />
+            </key>
+            <one-to-many class="com.lwsh.jboa.base.entity.SYS_ROLE_RIGHT" />
+        </set>
+    </class>
+</hibernate-mapping>

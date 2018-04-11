@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        
+   
+        <!-- 配置dbcp数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="scott"></property>
+	</bean>
+	
+	<!-- 配置SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置Hibernate其他属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="format_sql">true</prop>					
+			</props>
+		</property>
+		<!-- 引入持久化类映射文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>com/lwsh/jboa/base/entity/BIZ_CHECK_RESULT.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/BIZ_CLAIM_VOUCHER.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/BIZ_CLAIM_VOUCHER_DETAIL.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/BIZ_CLAIM_VOUCHER_STATISTICS.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/BIZ_CLAIM_VOUYEAR__STATISTICS.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/BIZ_LEAVE.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/SYS_DEPARTMENT.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/SYS_EMPLOYEE.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/SYS_POSITION.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/SYS_RIGHT.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/SYS_ROLE_RIGHT.hbm.xml</value>
+				<value>com/lwsh/jboa/base/entity/SYS_ROLE.hbm.xml</value>
+			</list>
+		</property>	
+		
+	</bean>
+	 <!-- 事务管理器 -->
+        <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        	<property name="sessionFactory" ref="sessionFactory"></property>
+        </bean> 
+        
+        <!-- 事务的所有类型 -->
+        <tx:advice id="txAdvice" transaction-manager="txManager">
+        	<tx:attributes>
+        		<tx:method name="find*" read-only="true" />
+				<tx:method name="search*" read-only="true" />
+				<tx:method name="query*" read-only="true" />
+				<tx:method name="add*" propagation="REQUIRED" />
+				<tx:method name="register" propagation="REQUIRED" />
+				<tx:method name="del*" propagation="REQUIRED" />
+				<tx:method name="update*" propagation="REQUIRED" />
+				<tx:method name="do*" propagation="REQUIRED" />			
+        	</tx:attributes>
+
+        </tx:advice> 
+         <!-- AOP -->
+        <aop:config>
+			<!-- 定义切入点 -->
+			<aop:pointcut id="serviceMethod"
+				expression="execution(* com.lwsh.jboa.*.biz.*.*(..))" />
+			<!-- 将事务通知与切入点组合 -->
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+		</aop:config> 
+	 <import resource="applicationContext-emp.xml"/>
+	 <import resource="applicationContext-claim.xml"/>
+</beans>
